@@ -7,6 +7,8 @@ typedef  int Tablero[FILAS][COLUMNAS];
 void inicializarTablero(Tablero tablero, int celulaMuerta);
 void imprimirTablero(Tablero tablero);
 void estadoCelulasInicial(Tablero tablero);
+int validarFila();
+int validarColumna();
 
 int main() {
     Tablero tablero;
@@ -48,13 +50,72 @@ void estadoCelulasInicial(Tablero tablero){
     std::cout << "Quiere empezar a agregar? (Y/N)" << endl;
     std::cin >> continuoAgregando;
     while (std::cin && ::tolower(continuoAgregando) == 'y') {
-        std::cout << "Ingrese la fila : ";
-        std::cin >> fila;
-        std::cout << "Ingrese la columna: ";
-        std::cin >> columna;
+        fila = validarFila();
+        columna = validarColumna();
+
         tablero[fila - 1][columna - 1] = 1;
         std::cout << "Continua Agregando? (Y/N): ";
         std::cin >> continuoAgregando;
     }
          
+}
+int validarFila() {
+    int userInput;
+    do 
+    {
+        std::cout << "Introduzca un valor para la fila : ";
+        std::cin >> userInput;
+        while (std::cin.fail()) 
+        {
+
+            std::cout << "Error NO es un numero" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(256, '\n');
+            std::cin >> userInput;
+        }
+        if (userInput < 1)
+        {
+            std::cout << "Tiene que ser mayor a 1 el valor\n";
+        }
+
+        if (userInput > FILAS)
+        {
+            std::cout << "Tiene que ser menor a 20 el valor\n";
+        }
+
+    } while (userInput < 1 || userInput > FILAS);
+
+
+    return userInput;
+
+}
+
+int validarColumna() {
+    int userInput;
+    do
+    {
+        std::cout << "Introduzca un valor para la columna : ";
+        std::cin >> userInput;
+        while (std::cin.fail())
+        {
+
+            std::cout << "Error NO es un numero" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(256, '\n');
+            std::cin >> userInput;
+        }
+        if (userInput < 1)
+        {
+            std::cout << "Tiene que ser mayor a 1 el valor\n";
+        }
+
+        if (userInput > COLUMNAS)
+        {
+            std::cout << "Tiene que ser menor a 80 el valor\n";
+        }
+
+    } while (userInput < 1 || userInput > COLUMNAS);
+
+
+    return userInput;
 }
