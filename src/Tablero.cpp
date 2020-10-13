@@ -1,5 +1,5 @@
 #include "Tablero.h"
-
+const char VIVA = '#', MUERTA = '.';
 
 void inicializarTablero(Tablero tablero, char celulaMuerta) {
 

@@ -14,9 +14,7 @@ int contarCelulasVivas(Tablero tablero) {
     return contador;
 }
 
-
-
-void  determinarVida(Tablero tablero, conteoCelulas& celulas) {
+void  determinarVida(Tablero tablero, ConteoCelulas& celulas) {
     Tablero tableroAnterior{};
     crearTableroAnterior(tablero, tableroAnterior);
     celulas.celulasMuertasTurno = 0;
@@ -31,7 +29,8 @@ void  determinarVida(Tablero tablero, conteoCelulas& celulas) {
             {
                 for (int d = -1; d <= 1; d++)
                 {
-                    if (!(c == 0 && d == 0) && (FILAS > (a + c) >= 0 && COLUMNAS > (b + d) >= 0) && (tableroAnterior[a + c][b + d] == VIVA))
+                	//Si uno de los dos pivotes (c y d) es diferente de 0, y la suma de la posicion del array para a y para b es mayor o igual que cero
+                    if ( (c!=0 || d!=0) && (FILAS > (a + c) >= 0) && (COLUMNAS > (b + d) >= 0) && (tableroAnterior[a + c][b + d] == VIVA))
                     {
                         ++estaVivo;
                     }
@@ -61,48 +60,84 @@ void  determinarVida(Tablero tablero, conteoCelulas& celulas) {
         }
     }
 
-
-
 }
 void iniciarJuego()
 {
-    Tablero tablero;
-    conteoCelulas celulas;
-    Tablero tableroUnoAtras;
-    Tablero tableroDosAtras;
-
-    char calculateagain = 'y';
+    ConteoCelulas celulas;
+    celulas.celulasVivasTotal = 0, celulas.celulasMuertasTotal = 0, celulas.totalTurnos = 0;
+    Tablero tablero, tableroUnoAtras, tableroDosAtras;
+    bool  inicioJuego = true, sigueTurno = false;
+    int celulasVivas{}, inputUsuarioJuego{};
+    double promedioVivas{}, promedioMuertas{};
     do
     {
-        inicializarTablero(tablero, MUERTA);
-        std::cout << "Bienvenido al Juego de la vida 1.0!" << endl;
-        estadoCelulasInicial(tablero);
-        imprimirTablero(tablero);
-        int celulasVivas = contarCelulasVivas(tablero);
-        std::cout << "Existen " << celulasVivas << " vivas al comenzar el juego" << endl;
-        char a = 'y';
-
-        do
+        inicioJuego = pantallaInicial(tablero, celulasVivas);
+    	if (inicioJuego)
+    	{
+            pedirInput(inputUsuarioJuego,sigueTurno,inicioJuego);
+    	}
+        
+        
+        if (sigueTurno)
         {
-            determinarVida(tablero, celulas);
-            imprimirTablero(tablero);
-            celulasVivas = contarCelulasVivas(tablero);
-            crearTableroAnterior(tableroUnoAtras, tableroDosAtras);
-            crearTableroAnterior(tablero, tableroUnoAtras);
-            std::cout << "Existen " << celulasVivas << " vivas actualmente" << endl;
-            std::cout << "Nacieron " << celulas.celulasVivasTurno << " en el ultimo turno" << endl;
-            std::cout << "Murieron " << celulas.celulasMuertasTurno << " en el ultimo turno" << endl;
-            std::cout << "En promedio han nacido " << celulas.celulasVivasTotal / celulas.totalTurnos << " celulas en el transcurso del juego" << endl;
-            std::cout << "En promedio han muerto " << celulas.celulasMuertasTotal / celulas.totalTurnos << " celulas en el transcurso del juego" << endl;
-            if (sonIgualesDosTableros(tableroDosAtras, tableroUnoAtras) && sonIgualesDosTableros(tablero, tableroUnoAtras))
+            do
             {
-                std::cout << "Se freezo el juego" << endl;
-            }
-            std::cout << "Quiere continuar jugando (y/n) ";
-            std::cin >> a;
-        } while (a != 'n');
-        std::cout << "Quiere resetear o terminar el juego (y/n) ";
-        std::cin >> calculateagain;
-    } while (calculateagain != 'n');
+                determinarVida(tablero, celulas);
+                imprimirTablero(tablero);
+                celulasVivas = contarCelulasVivas(tablero);
+                crearTableroAnterior(tableroUnoAtras, tableroDosAtras);
+                crearTableroAnterior(tablero, tableroUnoAtras);
+                promedioMuertas = celulas.celulasMuertasTotal / celulas.totalTurnos;
+                promedioVivas = celulas.celulasVivasTotal / celulas.totalTurnos;
+                std::cout << "Existen " << celulasVivas << " vivas actualmente" << endl;
+                std::cout << "Nacieron " << celulas.celulasVivasTurno << " en el ultimo turno" << endl;
+                std::cout << "Murieron " << celulas.celulasMuertasTurno << " en el ultimo turno" << endl;
+                std::cout <<"En promedio han nacido " << promedioVivas << " celulas en el transcurso del juego" << endl;
+                std::cout << "En promedio han muerto " << promedioMuertas << " celulas en el transcurso del juego" << endl;
+                if (sonIgualesDosTableros(tableroDosAtras, tableroUnoAtras) && sonIgualesDosTableros(tablero, tableroUnoAtras))
+                {
+                    std::cout << "Se freezo el juego" << endl;
+                }
+                pedirInput(inputUsuarioJuego, sigueTurno, inicioJuego);
+                
+            } while (sigueTurno);
+        }
+    } while (inicioJuego);
 
+}
+bool pantallaInicial(Tablero tablero, int &celulasVivas )
+{
+    inicializarTablero(tablero, MUERTA);
+    std::cout << "Bienvenido al Juego de la vida 1.0!" << endl;
+    bool comienzaJuego = estadoCelulasInicial(tablero);
+    if (comienzaJuego)
+    {
+        imprimirTablero(tablero);
+        celulasVivas = contarCelulasVivas(tablero);
+        std::cout << "Existen " << celulasVivas << " vivas al comenzar el juego" << endl;
+        
+    }
+    return  comienzaJuego;
+    
+}
+void pedirInput(int &inputUsuarioJuego,bool &sigueTurno, bool &inicioJuego)
+{
+    std::cout << "Quiere ir al siguiEnte turno  (1) , resetear la partida (2) o terminar (3)" << endl;
+    std::cin >> inputUsuarioJuego;
+    switch (inputUsuarioJuego) {
+    case 1:
+        sigueTurno = true;
+        break;
+    case 2:
+        sigueTurno = false;
+        break;
+    case 3:
+        inicioJuego = false;
+        sigueTurno = false;
+        break;
+    default:
+        std::cout << "No es una opcion, se comienza el juego";
+        sigueTurno = true;
+        break;
+    }
 }

@@ -1,29 +1,47 @@
 #include "InputTablero.h"
 
-void estadoCelulasInicial(Tablero tablero) {
+bool estadoCelulasInicial(Tablero tablero) {
     int fila{};
     int columna{};
     char continuoAgregando{};
+    char comienzoJuego{};
     std::cout << "Para comenzar el juego tiene que agregar  celulas vivas" << endl;
-    std::cout << "Quiere empezar a agregar? (Y/N)" << endl;
-    std::cin >> continuoAgregando;
-    while (std::cin && ::tolower(continuoAgregando) == 'y') {
-        fila = validarFila();
-        columna = validarColumna();
+    std::cout << "Quiere empezar a agregar? (S/N)" << endl;
+    std::cin >> comienzoJuego;
+    if (std::cin && ::tolower(comienzoJuego) == 's')
+    {
+        continuoAgregando = 's';
+    }
+    else
+    {
+        return false;
+    }
+    while (std::cin && ::tolower(continuoAgregando) == 's') {
+        fila = validarInputUsuario(FILAS);
+        columna = validarInputUsuario(COLUMNAS);
         tablero[fila - 1][columna - 1] = VIVA;
-        std::cout << "Continua Agregando? (Y/N): ";
+        std::cout << "Continua Agregando? (S/N): ";
         std::cin >> continuoAgregando;
     }
+    return true;
 
 }
-int validarFila() {
+int validarInputUsuario(int input) {
     int inputUsuario;
     do
     {
-        std::cout << "Introduzca un valor para la fila : ";
+	    if (input == FILAS)
+	    {
+            std::cout << "Introduzca un valor para la fila : ";
+	    }
+        else
+        {
+            std::cout << "Introduzca un valor para la columna : ";
+        }
         std::cin >> inputUsuario;
         while (std::cin.fail())
         {
+        	
 
             std::cout << "Error NO es un numero, Por favor agregar un numero:";
             std::cin.clear();
@@ -32,47 +50,18 @@ int validarFila() {
         }
         if (inputUsuario < 1)
         {
-            std::cout << "Tiene que ser mayor a 1 el valor\n";
+            std::cout << "Tiene que ser mayor a 1 el valor" << endl;
         }
 
-        if (inputUsuario > FILAS)
+        if (inputUsuario > input)
         {
-            std::cout << "Tiene que ser menor a 20 el valor\n";
+            std::cout << "Tiene que ser menor a  " << input << " el valor" << endl;
         }
 
-    } while (inputUsuario < 1 || inputUsuario > FILAS);
+    } while (inputUsuario < 1 || inputUsuario > input);
 
 
     return inputUsuario;
 
 }
 
-int validarColumna() {
-    int inputUsuario{};
-    do
-    {
-        std::cout << "Introduzca un valor para la columna : ";
-        std::cin >> inputUsuario;
-        while (std::cin.fail())
-        {
-
-            std::cout << "Error NO es un numero, Por favor agregar un numero:";
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> inputUsuario;
-        }
-        if (inputUsuario < 1)
-        {
-            std::cout << "Tiene que ser mayor a 1 el valor\n";
-        }
-
-        if (inputUsuario > COLUMNAS)
-        {
-            std::cout << "Tiene que ser menor a  " << COLUMNAS << " el valor" << endl;
-        }
-
-    } while (inputUsuario < 1 || inputUsuario > COLUMNAS);
-
-
-    return inputUsuario;
-}
