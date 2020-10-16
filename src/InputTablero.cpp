@@ -5,6 +5,7 @@ bool estadoCelulasInicial(Tablero tablero) {
     int columna{};
     char continuoAgregando{};
     char comienzoJuego{};
+    bool comenzoElJuego = true;
     std::cout << "Para comenzar el juego tiene que agregar  celulas vivas" << endl;
     std::cout << "Quiere empezar a agregar? (S/N)" << endl;
     std::cin >> comienzoJuego;
@@ -14,7 +15,7 @@ bool estadoCelulasInicial(Tablero tablero) {
     }
     else
     {
-        return false;
+        comenzoElJuego= false;
     }
     while (std::cin && ::tolower(continuoAgregando) == 's') {
         fila = validarInputUsuario(FILAS);
@@ -23,7 +24,7 @@ bool estadoCelulasInicial(Tablero tablero) {
         std::cout << "Continua Agregando? (S/N): ";
         std::cin >> continuoAgregando;
     }
-    return true;
+    return comenzoElJuego;
 
 }
 int validarInputUsuario(int input) {
