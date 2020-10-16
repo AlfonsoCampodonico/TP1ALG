@@ -122,7 +122,7 @@ bool pantallaInicial(Tablero tablero, int &celulasVivas )
 }
 void pedirInput(int &inputUsuarioJuego,bool &sigueTurno, bool &inicioJuego)
 {
-    std::cout << "Quiere ir al siguiEnte turno  (1) , resetear la partida (2) o terminar (3)" << endl;
+    std::cout << "Quiere ir al siguiente turno  (1) , resetear la partida (2) o terminar (3)" << endl;
     std::cin >> inputUsuarioJuego;
     switch (inputUsuarioJuego) {
     case 1:

@@ -3,7 +3,8 @@
 #define TABLERO_H_
 #include <iostream>
 using std::endl;
-const int FILAS = 20, COLUMNAS = 60;
+#define  FILAS 20
+#define   COLUMNAS 60
 extern const char VIVA, MUERTA;
 
 typedef  char Tablero[FILAS][COLUMNAS];
