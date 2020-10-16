@@ -5,7 +5,10 @@
 
 bool estadoCelulasInicial(Tablero tablero);
 /*Funcion que se encarga del llenado inicial del tablero de la funcion,
- *se le pregunta al usuario las posiciones donde quiere alojar las celulas vivas en el tablero*/
+ *se le pregunta al usuario las posiciones donde quiere alojar las celulas vivas en el tablero
+ * PRE: Recibe un arreglo bidemensional de longitud fija
+ * POST: Devuelve un booleano
+ */
 
 int validarInputUsuario(int input);
 /*Funcion que se encarga de validar el dato de entrada del usuario, asegurandose que sea numerico,

@@ -18,7 +18,10 @@ int contarCelulasVivas(Tablero tablero);
  * POST: Un entero que representa la cantidad de celulas vivas
  */
 bool pantallaInicial(Tablero tablero, int& celulasVivas);
-/*Funcion que se encarga de mostrar por consola la carga inicial*/
+/*Funcion que se encarga de mostrar por consola la carga inicial
+ * PRE: Arreglo bidemensional (tablero) y un entero al cual se le va a asignar la cantidad de celulas vivas.
+ * POST: Devuelve un booleano dependiendo si quiere terminar o no el turnos
+ */
 void pedirInput(int& inputUsuarioJuego, bool& sigueTurno, bool& inicioJuego);
 /*Funcion que se encarga de pedir el input de continuar con el turno, resetear el juego o terminarlo*/
 #endif // JUEGO_DE_LA_VIDA_H_ 
