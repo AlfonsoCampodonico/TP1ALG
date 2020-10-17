@@ -140,16 +140,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="JuegoDeLaVida.cpp" />
+    <ClCompile Include="juego.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Tablero.cpp" />
-    <ClCompile Include="InputTablero.cpp" />
+    <ClCompile Include="tablero.cpp" />
+    <ClCompile Include="inputTablero.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="JuegoDeLaVida.h" />
+    <ClInclude Include="juego.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="Tablero.h" />
-    <ClInclude Include="InputTablero.h" />
+    <ClInclude Include="tablero.h" />
+    <ClInclude Include="inputTablero.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

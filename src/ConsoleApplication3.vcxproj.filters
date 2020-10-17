@@ -18,27 +18,27 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tablero.cpp">
+    <ClCompile Include="tablero.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputTablero.cpp">
+    <ClCompile Include="juego.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JuegoDeLaVida.cpp">
+    <ClCompile Include="inputTablero.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tablero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputTablero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JuegoDeLaVida.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tablero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="juego.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputTablero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

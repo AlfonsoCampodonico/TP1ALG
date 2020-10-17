@@ -1,5 +1,6 @@
-#include  "main.h"
+#include "main.h"
+
 int main() {
-    iniciarJuego();
-    return 0;
+	iniciarJuego();
+	return 0;
 }
