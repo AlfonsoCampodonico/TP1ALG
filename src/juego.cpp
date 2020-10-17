@@ -2,8 +2,11 @@
 
 int contarCelulasVivas(Tablero tablero) {
 	int contador = 0;
+	
 	for (int fila = 0; fila < FILAS; fila++) {
+		
 		for (int columna = 0; columna < COLUMNAS; columna++) {
+			
 			if (tablero[fila][columna] == VIVA) {
 				contador++;
 			}
@@ -18,38 +21,36 @@ void  determinarVida(Tablero tablero, ConteoCelulas& celulas) {
 	celulas.celulasMuertasTurno = 0;
 	celulas.celulasVivasTurno = 0;
 	celulas.totalTurnos++;
-	for (int a = 0; a < FILAS; a++)
-	{
-		for (int b = 0; b < COLUMNAS; b++)
-		{
+
+	for (int a = 0; a < FILAS; a++){
+		
+		for (int b = 0; b < COLUMNAS; b++){
+
 			int estaVivo = 0;
-			for (int c = -1; c <= 1; c++)
-			{
-				for (int d = -1; d <= 1; d++)
-				{
-					bool  estaEnElBorde = (FILAS > (a + c) >= 0) && (COLUMNAS > (b + d) >= 0);
+			for (int c = -1; c <= 1; c++){
+				
+				for (int d = -1; d <= 1; d++){
+					
 					/*Si uno de los dos pivotes (c y d) es diferente de 0, y la suma de la posicion del array
-					 *para a y para b es mayor o igual que cero*/
-					if ((c != 0 || d != 0) && estaEnElBorde && (tableroAnterior[a + c][b + d] == VIVA))
-					{
+					*para a y para b es mayor o igual que cero*/
+					bool  estaEnElTablero = (FILAS > a + c && a + c >= 0  && COLUMNAS > b+d && b+d > 0)   ;
+					
+					if ((c != 0 || d != 0) && estaEnElTablero &&(tableroAnterior[a+c][b+d] == VIVA)){
 						estaVivo++;
 					}
 				}
 			}
-			if ((estaVivo < 2) && (tablero[a][b] != MUERTA))
-			{
+			if ((estaVivo < 2) && (tablero[a][b] != MUERTA)){
 				tablero[a][b] = MUERTA;
 				celulas.celulasMuertasTurno++;
 				celulas.celulasMuertasTotal++;
 			}
-			else if (estaVivo == 3 && (tablero[a][b] != VIVA))
-			{
+			else if (estaVivo == 3 && (tablero[a][b] != VIVA)){
 				tablero[a][b] = VIVA;
 				celulas.celulasVivasTurno++;
 				celulas.celulasVivasTotal++;
 			}
-			else if (estaVivo > 3 && (tablero[a][b] != MUERTA))
-			{
+			else if (estaVivo > 3 && (tablero[a][b] != MUERTA)){
 				tablero[a][b] = MUERTA;
 				celulas.celulasMuertasTurno++;
 				celulas.celulasMuertasTotal++;
@@ -65,18 +66,14 @@ void iniciarJuego()
 	bool  inicioJuego = true, sigueTurno = false;
 	int celulasVivas{}, inputUsuarioJuego{};
 	double promedioVivas{}, promedioMuertas{};
-	do
-	{
+	do{
 		inicioJuego = pantallaInicial(tablero, celulasVivas);
-		if (inicioJuego)
-		{
+		if (inicioJuego){
 			pedirInput(inputUsuarioJuego, sigueTurno, inicioJuego);
 		}
 
-		if (sigueTurno)
-		{
-			do
-			{
+		if (sigueTurno){
+			do{
 				determinarVida(tablero, celulas);
 				imprimirTablero(tablero);
 				celulasVivas = contarCelulasVivas(tablero);
@@ -89,8 +86,7 @@ void iniciarJuego()
 				std::cout << "Murieron " << celulas.celulasMuertasTurno << " en el ultimo turno" << endl;
 				std::cout << "En promedio han nacido " << promedioVivas << " celulas en el transcurso del juego" << endl;
 				std::cout << "En promedio han muerto " << promedioMuertas << " celulas en el transcurso del juego" << endl;
-				if (sonIgualesDosTableros(tableroDosAtras, tableroUnoAtras) && sonIgualesDosTableros(tablero, tableroUnoAtras))
-				{
+				if (sonIgualesDosTableros(tableroDosAtras, tableroUnoAtras) && sonIgualesDosTableros(tablero, tableroUnoAtras)){
 					std::cout << "El juego se congelo, no van a seguir naciendo o muriendo celulas!" << endl;
 				}
 				pedirInput(inputUsuarioJuego, sigueTurno, inicioJuego);
@@ -98,21 +94,18 @@ void iniciarJuego()
 		}
 	} while (inicioJuego);
 }
-bool pantallaInicial(Tablero tablero, int& celulasVivas)
-{
+bool pantallaInicial(Tablero tablero, int& celulasVivas){
 	inicializarTablero(tablero, MUERTA);
 	std::cout << "Bienvenido al Juego de la vida 1.0!" << endl;
 	bool comienzaJuego = estadoCelulasInicial(tablero);
-	if (comienzaJuego)
-	{
+	if (comienzaJuego){
 		imprimirTablero(tablero);
 		celulasVivas = contarCelulasVivas(tablero);
 		std::cout << "Existen " << celulasVivas << " vivas al comenzar el juego" << endl;
 	}
 	return  comienzaJuego;
 }
-void pedirInput(int& inputUsuarioJuego, bool& sigueTurno, bool& inicioJuego)
-{
+void pedirInput(int& inputUsuarioJuego, bool& sigueTurno, bool& inicioJuego){
 	std::cout << "Quiere ir al siguiente turno  (1) , resetear la partida (2) o terminar (3)" << endl;
 	std::cin >> inputUsuarioJuego;
 	switch (inputUsuarioJuego) {
